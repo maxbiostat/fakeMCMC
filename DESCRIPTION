@@ -2,13 +2,15 @@ Package: fakeMCMC
 Title: Sample from 'Fake' Markov Processes 
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person(given = "Luiz Max",
+           family = "Carvalho",
+           role = c("aut", "cre"),
+           email = "lmax.fgv@gmail.com",
+           comment = c(ORCID = "0000-0001-5736-5578"))
+Description: Synthetic processes to mimic Markov chain Monte Carlo.
 Imports:
    stats
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

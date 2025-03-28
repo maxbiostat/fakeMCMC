@@ -7,7 +7,6 @@
 #' @return a vector of size 2 with the BCI
 #' @export lognormal_bci
 #'
-#' @examples
 lognormal_bci <- function(alpha = 0.95,
                           lmean = 0,
                           lsd = 1) {
