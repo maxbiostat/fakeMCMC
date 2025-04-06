@@ -60,14 +60,14 @@ lognormal_hpd <- function(alpha = 0.95, lmean, lsd) {
                    sdlog = lsd)
     return(cand[2] - cand[1])
   }
-  Opt <- optimise(opt_int,
+  Opt <- stats::optimise(opt_int,
                   a = alpha,
                   lower = 1E-20,
                   upper = 1 - alpha,
                   tol = 1E-30)
   q1.opt <- Opt$minimum
   q2.opt <- q1.opt + alpha
-  return(qlnorm(
+  return(stats::qlnorm(
     p = c(q1.opt, q2.opt),
     meanlog = lmean,
     sdlog = lsd
@@ -173,7 +173,7 @@ exponential_hpd <- function(alpha = 0.95, theta) {
                   tol = 1E-30)
   q1.opt <- Opt$minimum
   q2.opt <- q1.opt + alpha
-  return(qexp(
+  return(stats::qexp(
     p = c(q1.opt, q2.opt), rate = theta))
 }
 #'  Compute the central BCI of an exponential distribution
