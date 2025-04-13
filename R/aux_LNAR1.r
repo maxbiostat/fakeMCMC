@@ -167,3 +167,24 @@ compute_LT_variance <- function(p, lmean, lsd, phi, K = 5000){
   
   return(SigmaSq_p)
 }
+#' Fits a log-normal autorregressive (LNAR) model of order 1
+#'
+#' @param X draws from MCMC
+#'
+#' @returns a list containing the estimated LNAR1 parameters (lmean, lsd and phi)
+#' @export fit_LNAR1
+#'
+fit_LNAR1 <- function(X){
+  fit <- stats::arima(log(X), order = c(1, 0, 0))
+  
+  m.hat <- fit$coef[2]
+  phi.hat <- fit$coef[1]
+  s.hat <- sqrt(fit$sigma2/(1-phi.hat^2))
+  
+  out <- list(
+    mu_hat = as.numeric(m.hat),
+    sd_hat = as.numeric(s.hat),
+    phi_hat = as.numeric(phi.hat) 
+  )
+  return(out)
+}
