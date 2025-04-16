@@ -40,5 +40,3 @@ MH_exponential <- function(M = 1e4,
   }
   return(res)
 }
-
-MH_exponential(M = 1, theta = .91)
