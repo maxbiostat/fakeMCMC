@@ -12,15 +12,15 @@ MH_exponential <- function(M = 1e4,
                            x0 = 0.1){
   ## Jones & Hobert (2001) Stat Sci
   
-  res <- data.frame(matrix(NA, ncol = 3, nrow = M))
+  res <- data.frame(matrix(NA, ncol = 3, nrow = M + 1))
   
   curr <- x0
   curr_ltarget <- stats::dexp(x = curr, rate = 1, log = TRUE)
   names(res) <- c("x", "lp", "accp")
   
-  res[1, ] <- c(curr, curr_ltarget, 1)
+  res[1, ] <- c(curr, curr_ltarget, NA)
   
-  for(i in 2:M){
+  for(i in 2:(M+1)){
     
     prop <- stats::rexp(1, rate = theta)
     prop_ltarget <- stats::dexp(x = prop, rate = 1, log = TRUE)
@@ -40,3 +40,5 @@ MH_exponential <- function(M = 1e4,
   }
   return(res)
 }
+
+MH_exponential(M = 1, theta = .91)
