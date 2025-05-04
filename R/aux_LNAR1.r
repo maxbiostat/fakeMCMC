@@ -123,7 +123,7 @@ LNAR_quantile_autocorr <- function(k, xi_p, lmean, lsd, phi, K){
 #'
 compute_LT_variance <- function(lmean, lsd, phi, K = 5000){
   IIDVar <- (exp(lsd^2) - 1) * exp(2*lmean + lsd^2)
-  SigmaSq <-  IIDVar * LNAR1_eff(lmean = lmean, lsd = lsd, phi = phi, K = K)
+  SigmaSq <-  IIDVar * 1/LNAR1_eff(lmean = lmean, lsd = lsd, phi = phi, K = K)
   return(SigmaSq)
 }
 #' Compute the long-term (LT) variance of a quantile indicator
