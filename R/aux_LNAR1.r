@@ -1,36 +1,3 @@
-#' Computes the autocorrelation function of a Latent autoregressive (LAR1) for quantiles of a LNAR1 process
-#' @param l lag
-#' @param a the (log) quantile of interest
-#' @param phi correlation parameter of the latent AR(1)
-#' @param sigma_e the standard deviation of the innovations of the latent AR(1)
-#'
-#' @return the autocorrelation at lag `l`
-#' @export LAR_autocorr_2
-#'
-#' @details the LAR is a **binary** process.
-#'  This is mostly an internal function.
-#' Here we are computing the autocorrelation of a process of the type
-#' exp(Z_t) <= log(a), where Z_t is an AR(1, lmeam, lsd, phi).
-#' 
-LAR_autocorr_2 <- function(l, a, phi, sigma_e){
-
-  sigma_m <- sigma_e/sqrt(1 - phi^2)
-  covk <-  phi^l * sigma_m^2
-  Sigma <- matrix(c(sigma_m^2, covk, covk, sigma_m^2), nrow = 2)
-  P1 <- mvtnorm::pmvnorm(lower = c(-Inf, -Inf),
-                         upper = c(a, a),
-                         mean = rep(0, 2),
-                         sigma = Sigma)
-  P2 <- mvtnorm::pmvnorm(lower = c(-Inf, a),
-                         upper = c(a, Inf),
-                         mean = rep(0, 2),
-                         sigma = Sigma)
-  ans <- (P1[1]/stats::pnorm(q = a, sd = sigma_m)) -
-    (P2[1]/stats::pnorm(q = a, sd = sigma_m, lower.tail = FALSE))
-  return(ans)
-}
-LAR_autocorr_2 <- Vectorize(LAR_autocorr_2)
-
 #' Autocovariance function of LNAR1 process
 #'
 #' @param k the lag 
@@ -117,6 +84,10 @@ find_phi_LNAR1 <- function(eff, lmean, lsd){
 #'  Default is K = 5000
 #' @return the autocorrelation value
 #' @export LNAR_quantile_autocorr
+#' @details
+#' Here we are using the autocorrelation of a binary process (LAR1) to compute
+#'  the autocorrelation of a process of the type
+#' exp(Z_t) <= log(a), where Z_t is an AR(1, lmean, lsd, phi).
 #'
 LNAR_quantile_autocorr <- function(k, xi_p, lmean, lsd, phi, K){
   
@@ -125,7 +96,7 @@ LNAR_quantile_autocorr <- function(k, xi_p, lmean, lsd, phi, K){
   sgE <- sqrt(v) * sqrt(1 - phi ^ 2)
   
   g_j <- function(j){
-    LAR_autocorr_2(l = j,
+    LAR_autocorr(l = j,
                    a = log(xi_p) - lmean,
                    sigma_e = sgE,
                    phi = phi)
@@ -139,7 +110,22 @@ LNAR_quantile_autocorr <- function(k, xi_p, lmean, lsd, phi, K){
   
   return(f_j(k))
 }
-
+#' Compute the long-term (LT) variance of the mean
+#'
+#' @param lmean log mean
+#' @param lsd log standard deviation
+#' @param phi correlation parameter of the latent AR(1)
+#' @param K an upper bound up to which to sum the autocorrelation function.
+#'  Default is K = 5000
+#'
+#' @return a scalar containing the LT variance
+#' @export compute_LT_variance
+#'
+compute_LT_variance <- function(lmean, lsd, phi, K = 5000){
+  IIDVar <- (exp(lsd^2) - 1) * exp(2*lmean + lsd^2)
+  SigmaSq <-  IIDVar * LNAR1_eff(lmean = lmean, lsd = lsd, phi = phi, K = K)
+  return(SigmaSq)
+}
 #' Compute the long-term (LT) variance of a quantile indicator
 #'
 #' @param p a quantile (between 0 and 1)
@@ -149,10 +135,10 @@ LNAR_quantile_autocorr <- function(k, xi_p, lmean, lsd, phi, K){
 #' @param K an upper bound up to which to sum the autocorrelation function.
 #'  Default is K = 5000
 #'
-#' @return a scalar containt the LT variance
-#' @export compute_LT_variance
+#' @return a scalar containing the LT variance of the target quantile
+#' @export compute_p_LT_variance
 #'
-compute_LT_variance <- function(p, lmean, lsd, phi, K = 5000){
+compute_p_LT_variance <- function(p, lmean, lsd, phi, K = 5000){
   x <- stats::qlnorm(p = p, 
                 meanlog = lmean,
                 sdlog = lsd)

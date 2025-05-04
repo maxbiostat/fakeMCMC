@@ -13,6 +13,9 @@ lognormal_hpd_percentiles(alpha = 0.95, lmean, lsd)
 
 \item{lsd}{log standard deviation}
 }
+\value{
+a vector with two probabilities
+}
 \description{
 Get the percentiles corresponding to the HPD of a log-normal
 }

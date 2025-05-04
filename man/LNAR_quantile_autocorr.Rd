@@ -26,3 +26,8 @@ the autocorrelation value
 \description{
 Autocorrelation function for the p-th quantile of a LNAR1 process
 }
+\details{
+Here we are using the autocorrelation of a binary process (LAR1) to compute
+the autocorrelation of a process of the type
+exp(Z_t) <= log(a), where Z_t is an AR(1, lmean, lsd, phi).
+}

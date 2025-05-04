@@ -80,8 +80,8 @@ lognormal_hpd <- function(alpha = 0.95, lmean, lsd) {
 #' @param lmean log mean
 #' @param lsd log standard deviation
 #'
-#' @return
-#' @export
+#' @return a vector with two probabilities 
+#' @export lognormal_hpd_percentiles
 #'
 #' @examples
 #' lognormal_hpd_percentiles(0.95, 0, 1)
