@@ -5,22 +5,31 @@
 \title{Sample from a LAR(1) process}
 \usage{
 generate_LAR_TS(N, phi, target.p)
+
+generate_LAR_TS(N, phi, target.p)
 }
 \arguments{
-\item{N}{the number of draws}
+\item{N}{number of draws}
 
-\item{phi}{correlation parameter of the latent AR(1)}
+\item{phi}{correlation parameter between -1 and 1}
 
-\item{target.p}{the marginal probability that X = 1}
+\item{target.p}{target marginal probability that X = 1}
 }
 \value{
 a vector with \code{N} draws
+
+a vector of \code{N} binary draws
 }
 \description{
 Sample from a LAR(1) process
+
+Generate draws from a latent autorregressive (LAR1) model
 }
 \examples{
 p <- .23
 thePhi <- get_LAR_phi(Eff = .6, p = p)
 X <- generate_LAR_TS(N = 1E3, phi = thePhi, target.p = p)
+the.phi <- get_LAR_phi(Eff = .2, p = .12)
+X <- generate_LAR_TS(N = 1e3, phi = the.phi, target.p = .12)
+acf(X)
 }

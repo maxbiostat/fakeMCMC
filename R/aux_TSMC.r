@@ -12,7 +12,7 @@
 #' @examples
 #' X <- generate_MC_TS(N = 1e3, target.ess = 150, target.p = .23)
 generate_MC_TS <- function(N, target.ess, target.p = 0.5, x0 = NULL) {
-  require(BinaryMarkovChains)
+  requireNamespace("BinaryMarkovChains")
   target.act <- N / target.ess
   target.alpha <- (2 * target.p) / (target.act + 1)
   ## The line below clamps out attempts to set efficiencies higher than

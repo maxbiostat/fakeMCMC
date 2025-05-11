@@ -140,3 +140,23 @@ get_LAR_phi <- function(Eff, p){
   Opt <- stats::optimise(obj, interval = c(-.999, .999))
   return(Opt$minimum)
 }
+
+#' Generate draws from a latent autorregressive (LAR1) model
+#'
+#' @param N number of draws
+#' @param phi correlation parameter between -1 and 1
+#' @param target.p target marginal probability that X = 1
+#'
+#' @return a vector of \code{N} binary draws
+#' @export generate_LAR_TS
+#'
+#' @examples
+#' the.phi <- get_LAR_phi(Eff = .2, p = .12)
+#' X <- generate_LAR_TS(N = 1e3, phi = the.phi, target.p = .12)
+#' acf(X)
+generate_LAR_TS <- function(N, phi, target.p){
+  Z <- stats::arima.sim(n = N, list(ar = c(phi)),
+                 sd = sqrt((1 - phi^2))) # latent process
+  X <- as.vector( (Z <= stats::qnorm(p = target.p)) + 0 )
+  return(X)
+}
