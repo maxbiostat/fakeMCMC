@@ -93,8 +93,9 @@ compute_LAR_beta <- function(sigma_e, phi, p){
 #' @export LAR_ess
 #'
 LAR_ess <-  function(N, p, phi, sigma_e, K = 1000){
+  sigma_marginal <- sigma_e/sqrt(1-phi^2)
   S <- sum(LAR_autocorr(l = 1:K,
-                        a = stats::qnorm(p = p, sd = sigma_e),
+                        a = stats::qnorm(p = p, sd = sigma_marginal),
                         phi = phi, sigma_e = sigma_e))
   return(N/(1 + 2*S))
 }
@@ -113,7 +114,8 @@ LAR_ess <-  function(N, p, phi, sigma_e, K = 1000){
 #' thePhi <- get_LAR_phi(Eff = .6, p = p)
 #' X <- generate_LAR_TS(N = 1E3, phi = thePhi, target.p = p)
 generate_LAR_TS <- function(N, phi, target.p){
-  Z <- stats::arima.sim(n = N, list(ar = c(phi)),
+  Z <- stats::arima.sim(n = N,
+                        list(ar = c(phi)),
                  sd = sqrt((1 - phi^2))) # latent process
   X <- as.vector( (Z <= stats::qnorm(p = target.p)) + 0 )
   return(X)
