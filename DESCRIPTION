@@ -9,7 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-5736-5578"))
 Description: Synthetic processes to mimic Markov chain Monte Carlo.
 Imports:
-   stats, BinaryMarkovChains, markovchain
+   stats, BinaryMarkovChains, markovchain, VGAM
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

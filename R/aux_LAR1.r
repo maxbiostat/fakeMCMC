@@ -111,7 +111,7 @@ LAR_ess <-  function(N, p, phi, sigma_e, K = 1000){
 #'
 #' @examples
 #' p <- .23
-#' thePhi <- get_LAR_phi(Eff = .6, p = p)
+#' thePhi <-  0.3717456 # corresponding to efficiency of 60%
 #' X <- generate_LAR_TS(N = 1E3, phi = thePhi, target.p = p)
 generate_LAR_TS <- function(N, phi, target.p){
   Z <- stats::arima.sim(n = N,

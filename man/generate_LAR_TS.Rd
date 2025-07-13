@@ -27,7 +27,7 @@ Generate draws from a latent autorregressive (LAR1) model
 }
 \examples{
 p <- .23
-thePhi <- get_LAR_phi(Eff = .6, p = p)
+thePhi <-  0.3717456 # corresponding to efficiency of 60\%
 X <- generate_LAR_TS(N = 1E3, phi = thePhi, target.p = p)
 the.phi <- get_LAR_phi(Eff = .2, p = .12)
 X <- generate_LAR_TS(N = 1e3, phi = the.phi, target.p = .12)

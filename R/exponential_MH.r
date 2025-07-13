@@ -40,3 +40,32 @@ MH_exponential <- function(M = 1e4,
   }
   return(res)
 }
+#' Autocorrelation function of the Idependent Metropolis-Hastings with exponential target 
+#'
+#' @param k lag 
+#' @param theta proposal parameter
+#'
+#' @return the autocorrelation at lag k
+#' @export autocorr_IMH
+#'
+autocorr_IMH <- function(k, theta) {
+  if (k == 1 / theta) {
+    rho <- (1 / 2) * (1 - 1 / k) ^ k
+  } else{
+    rho <- (1 - theta)^k/(k * theta + 1)
+  }
+  return(rho)
+}
+autocorr_IMH <- Vectorize(autocorr_IMH)
+#' Efficiency (integrated autorrelation time) of the IMH with exponential target
+#'
+#' @param theta the proposal rate parameter between 0 and 1
+#'
+#' @return the efficiency of the IMH
+#' @export IMH_eff
+#'
+IMH_eff <- function(theta){
+  S <- (VGAM::lerch(1 - theta, 1, 1/theta) - theta)/theta
+  eff <- 1/(1 + 2*S)
+  return(eff)
+}
