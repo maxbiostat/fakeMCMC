@@ -7,9 +7,9 @@
 #' @param LN whether to generate from a log-normal (default is true)
 #'
 #' @returns a vector of size N with the draws
-#' @export generate_fake_MCMC
+#' @export generate_LNAR1
 #'
-generate_fake_MCMC <- function(N = 1E4,
+generate_LNAR1 <- function(N = 1E4,
                                lmean = 0,
                                lsd = 1,
                                phi = -0.75,

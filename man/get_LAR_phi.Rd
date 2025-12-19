@@ -2,7 +2,7 @@
 % Please edit documentation in R/aux_LAR1.r
 \name{get_LAR_phi}
 \alias{get_LAR_phi}
-\title{Computes the phi associated with a given pair {ESS, p}}
+\title{Computes the phi associated with a given pair (ESS, p)}
 \usage{
 get_LAR_phi(Eff, p)
 }
@@ -15,7 +15,7 @@ get_LAR_phi(Eff, p)
 a number between -1 and 1
 }
 \description{
-Computes the phi associated with a given pair {ESS, p}
+Computes the phi associated with a given pair (ESS, p)
 }
 \details{
 Assumes sigma_e^2 = 1-rho^2, meaning the marginal is N(0, 1)

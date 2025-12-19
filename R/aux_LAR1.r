@@ -121,7 +121,7 @@ generate_LAR_TS <- function(N, phi, target.p){
   return(X)
 }
 
-#' Computes the phi associated with a given pair {ESS, p}
+#' Computes the phi associated with a given pair (ESS, p)
 #'
 #' @param Eff the target efficiency
 #' @param p the marginal probability that X = 1
